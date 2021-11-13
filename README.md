@@ -1,5 +1,5 @@
 
 
-## Api with sanctum
+## Api development with sanctum
 
-Demo on Api implimention with different Authentication
+Demo on larvel Api implimention with different Authentication
