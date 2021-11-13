@@ -64,11 +64,42 @@ class ApiController extends Controller
     //update api
     public function updateProduct(Request $request, $id)
     {
+        if( Product::where("id", $id)->exists() ){
+            $product = Product::find($id);
 
+            $product->productname = !empty($request->productname)? $request->productname : $product->productname;
+            $product->stock = !empty($request->stock) ? $request->stock : $product->stock;
+            $product->price = !empty($request->price)? $request->price : $product->price; 
+            $product->save();
+
+            return response()->json([
+                "status" => 1,
+                "message" => "Product updated successfully",
+            ]);
+        }else{
+            return response()->json([
+                "status" => 0,
+                "message" => "Product not found"
+            ], 404);
+        }
     }
     // delete api
     public function deleteProduct($id)
     {
+      if(Product::where("id", $id)->exists()){
+        $product = Product::find($id);
+        $product->delete();
 
+        return response()->json([
+            "status" => 1,
+            "message" => "product deleted successfully"
+        ]);
+
+      }else{
+          return response()->json([
+              "status" => 0,
+              "message" => "not found"
+          ], 404);
+      }
     }
 }
